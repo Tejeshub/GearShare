@@ -20,7 +20,7 @@
 
 The GearShare application is deployed and accessible online:
 
-- **Frontend Application:** [https://gearshare-git-main-tejeshubs-projects.vercel.app/](https://gearshare-git-main-tejeshubs-projects.vercel.app/)
+- **Frontend Application:** [https://gearshare-two.vercel.app/](https://gearshare-two.vercel.app/)
 - **Backend REST API:** [https://gearshare-5gl6.onrender.com](https://gearshare-5gl6.onrender.com/)
 - **Swagger / Interactive API Docs:** [https://gearshare-5gl6.onrender.com/docs](https://gearshare-5gl6.onrender.com/docs)
 - **API Health Check:** [https://gearshare-5gl6.onrender.com/api/v1/health](https://gearshare-5gl6.onrender.com/api/v1/health)
