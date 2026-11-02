@@ -16,8 +16,25 @@
 
 ---
 
+## 🌐 Live Demo
+
+The GearShare application is deployed and accessible online:
+
+- **Frontend Application:** [https://gearshare-git-main-tejeshubs-projects.vercel.app/](https://gearshare-git-main-tejeshubs-projects.vercel.app/)
+- **Backend REST API:** [https://gearshare-5gl6.onrender.com](https://gearshare-5gl6.onrender.com/)
+- **Swagger / Interactive API Docs:** [https://gearshare-5gl6.onrender.com/docs](https://gearshare-5gl6.onrender.com/docs)
+- **API Health Check:** [https://gearshare-5gl6.onrender.com/api/v1/health](https://gearshare-5gl6.onrender.com/api/v1/health)
+
+### Cloud Infrastructure
+- **Frontend Hosting:** [Vercel](https://vercel.com/) (Next.js 16 Edge / Serverless)
+- **Backend Hosting:** [Render](https://render.com/) (FastAPI / Uvicorn Python Web Service)
+- **Database:** [Supabase PostgreSQL](https://supabase.com/) (Managed PostgreSQL with connection pooling)
+
+---
+
 ## Table of Contents
 
+- [🌐 Live Demo](#-live-demo)
 - [1. Project Overview](#1-project-overview)
 - [2. Key Features](#2-key-features)
 - [3. Technology Stack](#3-technology-stack)
