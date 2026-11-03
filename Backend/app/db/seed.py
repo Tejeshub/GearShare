@@ -87,7 +87,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Sony",
         "category_slug": "cameras",
         "description": "Cinema Line Super 35 camera designed for visionary filmmakers. Features dual base ISO, 4K 120p recording, and professional 10-bit 4:2:2 color profiles.",
-        "image": "/images/products/sony-fx30.jpg",
+        "image": "/images/products/sony-fx30.webp",
         "spec": "Cinema Super 35 · 4K 120p · Dual Base ISO",
         "specs": [
             "Super 35mm Exmor R CMOS Sensor",
@@ -106,7 +106,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Sony",
         "category_slug": "cameras",
         "description": "The ultimate hybrid full-frame camera. Delivering 33MP high-resolution stills alongside 4K 60p 10-bit video with state-of-the-art real-time autofocus.",
-        "image": "/images/products/sony-a7-iv.jpg",
+        "image": "/images/products/sony-a7-iv.webp",
         "spec": "33MP Full-Frame · 4K 60p · 10-bit 4:2:2",
         "specs": [
             "33MP Full-Frame Exmor R Sensor",
@@ -125,7 +125,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Canon",
         "category_slug": "cameras",
         "description": "Speed, low-light precision, and unmatched hybrid filmmaking performance. Shoots 40fps electronic shutter and oversampled 6K-to-4K 60p without crop.",
-        "image": "/images/products/canon-eos-r6-ii.jpg",
+        "image": "/images/products/canon-eos-r6-ii.webp",
         "spec": "24.2MP CMOS · 40fps · 6K Oversampled 4K",
         "specs": [
             "24.2MP Full-Frame CMOS Sensor",
@@ -144,7 +144,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Nikon",
         "category_slug": "cameras",
         "description": "Flagship Z9 capabilities packed into a compact, agile body. 45.7MP stacked sensor, blackout-free real-time viewfinder, and internal 8.3K 60p N-RAW recording.",
-        "image": "/images/products/nikon-z8.jpg",
+        "image": "/images/products/nikon-z8.webp",
         "spec": "45.7MP Stacked · 8.3K 60p RAW · Blackout-Free",
         "specs": [
             "45.7MP Stacked CMOS Sensor",
@@ -163,7 +163,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Sony",
         "category_slug": "lenses",
         "description": "The world’s lightest and sharpest fast standard zoom. E-mount optical pinnacle with four XD linear motors, reduced focus breathing, and f/2.8 constant aperture.",
-        "image": "/images/products/sony-24-70-gm2.jpg",
+        "image": "/images/products/sony-24-70-gm2.webp",
         "spec": "f/2.8 Constant · G Master · Four XD Linear Motors",
         "specs": [
             "Focal Length: 24–70mm",
@@ -182,7 +182,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Sony",
         "category_slug": "lenses",
         "description": "Flagship telephoto zoom delivering unprecedented resolution, contrast, and autofocus tracking speed in an ultra-lightweight chassis.",
-        "image": "/images/products/sony-70-200-gm2.jpg",
+        "image": "/images/products/sony-70-200-gm2.webp",
         "spec": "f/2.8 Constant · Telephoto G Master · Dual Linear Motors",
         "specs": [
             "Focal Length: 70–200mm",
@@ -201,7 +201,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Aputure",
         "category_slug": "lighting",
         "description": "Industry-standard 5500K daylight point-source LED fixture. Generates exceptional 96+ CRI punch with Bowens mount light shapers and wireless Sidus Link control.",
-        "image": "/images/products/aputure-300d-ii.jpg",
+        "image": "/images/products/aputure-300d-ii.webp",
         "spec": "5500K Daylight · Bowens Mount · 96+ CRI / TLCI",
         "specs": [
             "300W COB LED Output",
@@ -220,7 +220,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "DJI",
         "category_slug": "stabilization",
         "description": "Next-gen flagship commercial camera stabilizer. Second-generation automated axis locks, native vertical shooting, 4.5kg payload capacity, and LiDAR autofocus integration.",
-        "image": "/images/products/dji-rs4-pro.jpg",
+        "image": "/images/products/dji-rs4-pro.webp",
         "spec": "Automated Locks · 4.5kg Payload · LiDAR Ready",
         "specs": [
             "Carbon Fiber Arms with Teflon Coating",
@@ -239,7 +239,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Tilta",
         "category_slug": "car-mount",
         "description": "Professional high-speed suction car mounting system engineered for cameras and gimbals. Features pneumatic vacuum suction cups with hydraulic damping shock-absorbing arm.",
-        "image": "/images/products/suction-car-mount-pro.png",
+        "image": "/images/products/suction-car-mount-pro.webp",
         "spec": "Hydraulic Damping · 4.5kg Payload · High-Speed Vacuum",
         "specs": [
             "Tri-cup Pneumatic Vacuum System",
@@ -258,7 +258,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Artisan",
         "category_slug": "camera-strap",
         "description": "Handcrafted jacquard woven vintage camera neck and shoulder strap with genuine reinforced leather ends and high-tensile quick-release buckles.",
-        "image": "/images/products/vintage-camera-strap.jpg",
+        "image": "/images/products/vintage-camera-strap.webp",
         "spec": "Jacquard Weave · Leather Ends · Quick Release",
         "specs": [
             "Wide Ergonomic Breathable Weave",
@@ -277,7 +277,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "Ulanzi",
         "category_slug": "tripod",
         "description": "Ultra-lightweight multi-section carbon fiber video and photo tripod equipped with fluid panoramic ball head, phone/teleprompter display bracket, and Arca-Swiss mount.",
-        "image": "/images/products/ulanzi-carbon-tripod.png",
+        "image": "/images/products/ulanzi-carbon-tripod.webp",
         "spec": "Carbon Fibre · Teleprompter Rig · Arca-Swiss Head",
         "specs": [
             "High-Strength 8-Layer Carbon Fiber",
@@ -296,7 +296,7 @@ EQUIPMENT_SEED_DATA: List[Dict[str, Any]] = [
         "brand": "DJI",
         "category_slug": "gimbal",
         "description": "Automated 3-axis motorized camera stabilizer with extended carbon fiber axis arms, vertical shooting mount, 4.5kg tested payload, and SuperSmooth algorithm.",
-        "image": "/images/products/dji-rs3-pro.png",
+        "image": "/images/products/dji-rs3-pro.webp",
         "spec": "3-Axis Motorized · Vertical Mount · 4.5kg Payload",
         "specs": [
             "Carbon Fiber Construction",
@@ -321,7 +321,7 @@ CREATOR_KITS_SEED_DATA: List[Dict[str, Any]] = [
         "tag": "ULTRA 360 / IMMERSIVE",
         "intended_use": "Next-generation 8K 360° capture, interactive virtual tours, high-motion vlogging, and dual-lens creative storytelling.",
         "description": "The all-in-one handheld dual-lens ultra creator bundle. Features dual Leica optics, integrated touchscreen monitor, wireless audio receiver, magnetic battery modules, and protective travel case.",
-        "image": "/images/kits/insta360-luna-ultra.png",
+        "image": "/images/kits/insta360-luna-ultra.webp",
         "price": Decimal("3899.00"),
         "sort_order": 1,
         "items": [
@@ -337,7 +337,7 @@ CREATOR_KITS_SEED_DATA: List[Dict[str, Any]] = [
         "tag": "STREAMING / WORKSPACE",
         "intended_use": "Professional YouTube studio setups, live streaming, desktop b-roll production, and high-engagement content workflows.",
         "description": "The ultimate desktop and studio workstation setup. Complete with hybrid camera body, bi-color ring light with smartphone/camera mount, shotgun audio, tabletop flex tripod, and monitoring interface.",
-        "image": "/images/kits/content-creator-kit.png",
+        "image": "/images/kits/content-creator-kit.webp",
         "price": Decimal("4999.00"),
         "sort_order": 2,
         "items": [
@@ -353,7 +353,7 @@ CREATOR_KITS_SEED_DATA: List[Dict[str, Any]] = [
         "tag": "CREATOR / HYBRID",
         "intended_use": "Vlogging, run-and-gun documentary, travel filmmaking, and Decisive Moment photo & 4K video storytelling.",
         "description": "Official Canon Creator Pack centered on the compact EOS R50 / R6 mirrorless platform. Bundled with the versatile RF-S zoom lens, Canon HG-100TBR tripod grip with wireless remote, and directional stereo microphone with deadcat windscreen.",
-        "image": "/images/kits/canon-content-creator.png",
+        "image": "/images/kits/canon-content-creator.webp",
         "price": Decimal("4299.00"),
         "sort_order": 3,
         "items": [

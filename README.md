@@ -689,7 +689,7 @@ npm run build
 
 | Section | Description | Asset Location |
 | :--- | :--- | :--- |
-| **01. Cinematic Hero** | Interactive 3D WebGL Camera Lens hero with dark cinematic aesthetic. | `public/images/why-gearshare/studio-rig.jpg` |
+| **01. Cinematic Hero** | Interactive 3D WebGL Camera Lens hero with dark cinematic aesthetic. | `public/images/why-gearshare/studio-rig.webp` |
 | **02. Catalogue** | 12 high-end cinema cameras, lenses, and lighting products. | `public/images/products/` |
 | **03. Creator Kits** | Pre-bundled production packages with component inspection. | `public/images/kits/` |
 | **04. Rental Calculator** | Live interactive duration and quote calculator with discounts. | `/rental-enquiry#calculator` |

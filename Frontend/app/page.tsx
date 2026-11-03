@@ -19,7 +19,6 @@ import {
 } from 'lucide-react'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { SmoothScrollProvider } from '@/components/SmoothScrollProvider'
 import { CinematicHero } from '@/components/CinematicHero'
@@ -70,53 +69,53 @@ const gear = [
   { name: 'Sony FX30', brand: 'Sony', category: 'Cameras', price: 48, spec: 'Cinema Super 35 · 4K 120p', image: images.camera },
   { name: 'A7 IV', brand: 'Sony', category: 'Cameras', price: 42, spec: '33MP Full-frame · Hybrid', image: images.hero },
   { name: '24–70mm GM II', brand: 'Sony', category: 'Lenses', price: 28, spec: 'f/2.8 · G Master Zoom', image: images.lens },
-  { name: 'Suction Car Mount Pro', brand: 'Tilta', category: 'Car Mount', price: 35, spec: 'Hydraulic Damping · 4.5kg Payload', image: '/images/categories/car-mount.png' },
+  { name: 'Suction Car Mount Pro', brand: 'Tilta', category: 'Car Mount', price: 35, spec: 'Hydraulic Damping · 4.5kg Payload', image: '/images/categories/car-mount.webp' },
 
-  { name: 'Vintage Embroidered Strap', brand: 'Artisan', category: 'Camera Strap', price: 12, spec: 'Jacquard Weave · Quick Release', image: '/images/categories/camera-strap.jpg' },
-  { name: 'Carbon Travel Tripod', brand: 'Ulanzi', category: 'Tripod', price: 18, spec: 'Carbon Fibre · Teleprompter Rig', image: '/images/categories/tripod.png' },
-  { name: 'DJI RS3 Pro Gimbal', brand: 'DJI', category: 'Gimbal', price: 32, spec: '3-Axis Motorized · Vertical Shooting', image: '/images/categories/gimbal.png' },
+  { name: 'Vintage Embroidered Strap', brand: 'Artisan', category: 'Camera Strap', price: 12, spec: 'Jacquard Weave · Quick Release', image: '/images/categories/camera-strap.webp' },
+  { name: 'Carbon Travel Tripod', brand: 'Ulanzi', category: 'Tripod', price: 18, spec: 'Carbon Fibre · Teleprompter Rig', image: '/images/categories/tripod.webp' },
+  { name: 'DJI RS3 Pro Gimbal', brand: 'DJI', category: 'Gimbal', price: 32, spec: '3-Axis Motorized · Vertical Shooting', image: '/images/categories/gimbal.webp' },
 ]
 
 const categoryData = [
   {
     name: 'Cameras',
     desc: 'Bodies built for decisive moments.',
-    image: '/images/categories/cameras.jpg',
+    image: '/images/categories/cameras.webp',
     position: 'object-center',
     span: 'md:col-span-2 md:row-span-2',
   },
   {
     name: 'Lenses',
     desc: 'Glass that changes perspective.',
-    image: '/images/categories/lenses.jpg',
+    image: '/images/categories/lenses.webp',
     position: 'object-center',
     span: 'md:col-span-1 md:row-span-1',
   },
   {
     name: 'Car Mount',
     desc: 'High-speed dynamic vehicle rigs.',
-    image: '/images/categories/car-mount.png',
+    image: '/images/categories/car-mount.webp',
     position: 'object-center',
     span: 'md:col-span-1 md:row-span-1',
   },
   {
     name: 'Camera Strap',
     desc: 'Ergonomic woven and leather straps.',
-    image: '/images/categories/camera-strap.jpg',
+    image: '/images/categories/camera-strap.webp',
     position: 'object-center',
     span: 'md:col-span-1 md:row-span-1',
   },
   {
     name: 'Tripod',
     desc: 'Rock-solid support for every frame.',
-    image: '/images/categories/tripod.png',
+    image: '/images/categories/tripod.webp',
     position: 'object-center',
     span: 'md:col-span-1 md:row-span-1',
   },
   {
     name: 'Gimbal',
     desc: 'Precision 3-axis motorized motion.',
-    image: '/images/categories/gimbal.png',
+    image: '/images/categories/gimbal.webp',
     position: 'object-center',
     span: 'md:col-span-2 md:row-span-1',
   },
@@ -126,9 +125,9 @@ const categoryData = [
 
 
 const kits = [
-  { title: 'Insta360 Luna Ultra Creator Bundle', tag: 'ULTRA 360 / IMMERSIVE', text: 'Handheld dual-lens 8K capture, touchscreen monitoring, and wireless audio.', price: 3899, image: '/images/kits/insta360-luna-ultra.png', items: 'Insta360 Dual-Lens · Touch Display · Wireless Mic · Batteries' },
-  { title: 'Content Creator Kit', tag: 'STREAMING / WORKSPACE', text: 'The complete studio streaming & video production workspace setup.', price: 4999, image: '/images/kits/content-creator-kit.png', items: 'Sony FX30 · Ring Light Stand · Shotgun Mic · GorillaPod' },
-  { title: 'Canon Content Creator Kit', tag: 'CREATOR / HYBRID', text: 'All-in-one vlogging and content kit with wireless grip and directional audio.', price: 4299, image: '/images/kits/canon-content-creator.png', items: 'Canon EOS Body · RF-S 18–45mm · Wireless Tripod Grip · Mic' },
+  { title: 'Insta360 Luna Ultra Creator Bundle', tag: 'ULTRA 360 / IMMERSIVE', text: 'Handheld dual-lens 8K capture, touchscreen monitoring, and wireless audio.', price: 3899, image: '/images/kits/insta360-luna-ultra.webp', items: 'Insta360 Dual-Lens · Touch Display · Wireless Mic · Batteries' },
+  { title: 'Content Creator Kit', tag: 'STREAMING / WORKSPACE', text: 'The complete studio streaming & video production workspace setup.', price: 4999, image: '/images/kits/content-creator-kit.webp', items: 'Sony FX30 · Ring Light Stand · Shotgun Mic · GorillaPod' },
+  { title: 'Canon Content Creator Kit', tag: 'CREATOR / HYBRID', text: 'All-in-one vlogging and content kit with wireless grip and directional audio.', price: 4299, image: '/images/kits/canon-content-creator.webp', items: 'Canon EOS Body · RF-S 18–45mm · Wireless Tripod Grip · Mic' },
 ]
 
 
@@ -273,37 +272,37 @@ function Categories({ onCategory }: { onCategory: (c: string) => void }) {
   // Static visual mapping for the 6 editorial card layouts
   const cardLayoutMeta: Record<string, { image: string; desc: string; position: string; span: string }> = {
     Cameras: {
-      image: '/images/categories/cameras.jpg',
+      image: '/images/categories/cameras.webp',
       desc: 'Bodies built for decisive moments.',
       position: 'object-center',
       span: 'md:col-span-2 md:row-span-2',
     },
     Lenses: {
-      image: '/images/categories/lenses.jpg',
+      image: '/images/categories/lenses.webp',
       desc: 'Glass that changes perspective.',
       position: 'object-center',
       span: 'md:col-span-1 md:row-span-1',
     },
     'Car Mount': {
-      image: '/images/categories/car-mount.png',
+      image: '/images/categories/car-mount.webp',
       desc: 'High-speed dynamic vehicle rigs.',
       position: 'object-center',
       span: 'md:col-span-1 md:row-span-1',
     },
     'Camera Strap': {
-      image: '/images/categories/camera-strap.jpg',
+      image: '/images/categories/camera-strap.webp',
       desc: 'Ergonomic woven and leather straps.',
       position: 'object-center',
       span: 'md:col-span-1 md:row-span-1',
     },
     Tripod: {
-      image: '/images/categories/tripod.png',
+      image: '/images/categories/tripod.webp',
       desc: 'Rock-solid support for every frame.',
       position: 'object-center',
       span: 'md:col-span-1 md:row-span-1',
     },
     Gimbal: {
-      image: '/images/categories/gimbal.png',
+      image: '/images/categories/gimbal.webp',
       desc: 'Precision 3-axis motorized motion.',
       position: 'object-center',
       span: 'md:col-span-2 md:row-span-1',
@@ -315,7 +314,7 @@ function Categories({ onCategory }: { onCategory: (c: string) => void }) {
     if (categories.length > 0) {
       return categories.map((cat, idx) => {
         const meta = cardLayoutMeta[cat.name] || {
-          image: categoryData[idx % categoryData.length]?.image || '/placeholder.jpg',
+          image: categoryData[idx % categoryData.length]?.image || '/placeholder.webp',
           desc: cat.description || categoryData[idx % categoryData.length]?.desc || '',
           position: 'object-center',
           span: categoryData[idx % categoryData.length]?.span || 'md:col-span-1 md:row-span-1',
@@ -381,15 +380,14 @@ function Categories({ onCategory }: { onCategory: (c: string) => void }) {
                 } hover:border-white/30 hover:shadow-2xl hover:shadow-black/60`}
               >
                 {/* Background image with fallback */}
-                <Image
+                <img
                   src={cat.image}
                   alt={cat.name}
-                  fill
-                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                  loading="lazy"
                   onError={(e) => {
                     const target = e.currentTarget
                     target.onerror = null
-                    target.src = '/placeholder.jpg'
+                    target.src = '/placeholder.webp'
                   }}
                   className={`absolute inset-0 size-full object-cover ${cat.position} grayscale contrast-110 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0`}
                 />
@@ -517,11 +515,10 @@ function Gear({ selected, setSelected }: { selected: string; setSelected: (v: st
             >
               {/* Product Photograph Container */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#060708]">
-                <Image
+                <img
                   src={item.image}
                   alt={item.name}
-                  fill
-                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+                  loading="lazy"
                   className="size-full object-cover object-center grayscale contrast-110 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                 />
                 {/* Availability Badge */}
@@ -610,11 +607,9 @@ function Gear({ selected, setSelected }: { selected: string; setSelected: (v: st
             <div className="grid gap-8 md:grid-cols-2">
               {/* Left Column: High-Res Image */}
               <div className="relative aspect-square w-full overflow-hidden border border-white/10 bg-[#060708]">
-                <Image
+                <img
                   src={active.image}
                   alt={active.name}
-                  fill
-                  sizes="(max-width: 767px) 100vw, 50vw"
                   className="size-full object-cover grayscale contrast-110"
                 />
                 <div className="absolute left-3 top-3 flex items-center gap-1.5 border border-white/20 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.14em] text-white/90 backdrop-blur-md">
@@ -753,11 +748,10 @@ function Kits() {
               }`}
             >
               {/* Kit Photograph with subtle dark treatment */}
-              <Image
+              <img
                 src={kit.image}
                 alt={kit.title}
-                fill
-                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 45vw"
+                loading="lazy"
                 className="absolute inset-0 size-full object-cover object-center grayscale contrast-110 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
 
@@ -827,11 +821,9 @@ function Kits() {
 
             {/* Header Image */}
             <div className="relative aspect-[16/9] w-full overflow-hidden border border-white/10 bg-[#060708]">
-              <Image
+              <img
                 src={active.image}
                 alt={active.title}
-                fill
-                sizes="(max-width: 767px) 100vw, 672px"
                 className="size-full object-cover grayscale contrast-110"
               />
               <div className="absolute left-3 top-3 border border-white/20 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.16em] text-white/90 backdrop-blur-md">
@@ -1116,11 +1108,10 @@ function Why() {
 
           {/* Right Column: Premium Equipment Photograph */}
           <div className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] xl:aspect-[1/1] w-full overflow-hidden border border-white/[0.08] bg-[#050607]">
-            <Image
-              src="/images/why-gearshare/studio-rig.jpg"
+            <img
+              src="/images/why-gearshare/studio-rig.webp"
               alt="Professional cinema camera rig with anamorphic lens and studio monitoring setup"
-              fill
-              sizes="(max-width: 1023px) 100vw, 50vw"
+              loading="lazy"
               className="size-full object-cover object-center grayscale contrast-115 transition-transform duration-700 ease-out hover:scale-105"
             />
             {/* Subtle monochrome vignette and depth gradients */}
@@ -1534,11 +1525,10 @@ function Calculator() {
                       <div className="flex gap-4">
                         {/* Thumbnail */}
                         <div className="relative aspect-square w-20 shrink-0 overflow-hidden border border-white/[0.08] bg-[#050607]">
-                          <Image
+                          <img
                             src={product.image}
                             alt={product.name}
-                            fill
-                            sizes="80px"
+                            loading="lazy"
                             className="size-full object-cover grayscale contrast-110 transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>

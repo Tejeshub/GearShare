@@ -2,7 +2,6 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Suspense, useMemo, useState, useEffect } from 'react'
 import {
   calculatorProducts,
@@ -552,11 +551,9 @@ function RentalEnquiryContent() {
 
               <div className="mt-5 flex flex-col gap-5 sm:flex-row">
                 <div className="relative aspect-video w-full sm:w-44 shrink-0 overflow-hidden border border-white/[0.08] bg-[#060708]">
-                  <Image
+                  <img
                     src={selectedKit.image}
                     alt={selectedKit.title}
-                    fill
-                    sizes="(max-width: 639px) 100vw, 176px"
                     className="size-full object-cover grayscale contrast-110"
                   />
                   <span className="absolute left-2.5 top-2.5 border border-white/20 bg-black/60 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">
@@ -621,7 +618,7 @@ function RentalEnquiryContent() {
                       className="flex items-center justify-between border border-white/10 bg-[#0c0d0e] p-2.5 text-left transition hover:border-white/40 hover:bg-[#1a1c20]"
                     >
                       <div className="flex items-center gap-2.5 truncate">
-                        <Image src={prod.image} alt={prod.name} width={32} height={32} sizes="32px" className="size-8 object-cover grayscale shrink-0" />
+                        <img src={prod.image} alt={prod.name} className="size-8 object-cover grayscale shrink-0" />
                         <div className="truncate">
                           <p className="text-xs font-medium text-white truncate">{prod.name}</p>
                           <p className="text-[10px] text-[#717478]">{prod.category} · {formatINR(prod.price)}/d</p>
@@ -667,11 +664,9 @@ function RentalEnquiryContent() {
                     >
                       <div className="flex items-center gap-4">
                         <div className="relative aspect-square size-16 shrink-0 overflow-hidden border border-white/[0.08] bg-[#050607]">
-                          <Image
+                          <img
                             src={product.image}
                             alt={product.name}
-                            fill
-                            sizes="64px"
                             className="size-full object-cover grayscale contrast-110"
                           />
                         </div>
