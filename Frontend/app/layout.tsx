@@ -5,23 +5,9 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'GearShare — Professional gear, without the commitment',
   description: 'Access professional photography and filmmaking equipment through GearShare. Explore gear, curated Creator Kits, and transparent rental estimates.',
-  generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/gearshare-icon.svg',
+    apple: '/gearshare-icon.svg',
   },
 }
 

@@ -29,6 +29,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 92px; }
 body {
   margin: 0;
   background: var(--background);
@@ -54,4 +55,3 @@ button { cursor: pointer; }
     transition-duration: .01ms !important;
   }
 }
-

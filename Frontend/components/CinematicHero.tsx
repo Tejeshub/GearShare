@@ -468,9 +468,28 @@ export function CinematicHero({ onReady }: { onReady?: () => void }) {
   const mouseRef = useRef({ x: 0, y: 0 })
   const [activeStage, setActiveStage] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [renderQuality, setRenderQuality] = useState<{ dpr: number; antialias: boolean } | null>(null)
+
+  useEffect(() => {
+    const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const deviceMemory = 'deviceMemory' in navigator
+      ? (navigator as Navigator & { deviceMemory?: number }).deviceMemory
+      : undefined
+    const hardwareConcurrency = navigator.hardwareConcurrency ?? 4
+    const isConstrained = !hasFinePointer || deviceMemory !== undefined && deviceMemory <= 4 || hardwareConcurrency <= 4
+    const devicePixelRatio = window.devicePixelRatio || 1
+    const dpr = isConstrained ? 1 : Math.min(2, Math.max(1, devicePixelRatio))
+
+    setRenderQuality({
+      dpr,
+      antialias: !isConstrained,
+    })
+  }, [])
 
   // Track mouse movements for gentle parallax
   useEffect(() => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = {
         x: (e.clientX / window.innerWidth) * 2 - 1,
@@ -540,24 +559,26 @@ export function CinematicHero({ onReady }: { onReady?: () => void }) {
 
         {/* Persistent 3D Canvas */}
         <div className="absolute inset-0 z-10">
-          <Canvas
-            camera={{ position: [0, 0.1, 5.2], fov: 40 }}
-            dpr={[1, 2]}
-            gl={{
-              antialias: true,
-              alpha: true,
-              powerPreference: 'high-performance',
-              toneMapping: THREE.ACESFilmicToneMapping,
-              toneMappingExposure: 1.35,
-            }}
-          >
-            <StudioLighting progressRef={progressRef} />
-            <LensScene
-              progressRef={progressRef}
-              mouseRef={mouseRef}
-              onReady={onReady}
-            />
-          </Canvas>
+          {renderQuality && (
+            <Canvas
+              camera={{ position: [0, 0.1, 5.2], fov: 40 }}
+              dpr={renderQuality.dpr}
+              gl={{
+                antialias: renderQuality.antialias,
+                alpha: true,
+                powerPreference: 'high-performance',
+                toneMapping: THREE.ACESFilmicToneMapping,
+                toneMappingExposure: 1.35,
+              }}
+            >
+              <StudioLighting progressRef={progressRef} />
+              <LensScene
+                progressRef={progressRef}
+                mouseRef={mouseRef}
+                onReady={onReady}
+              />
+            </Canvas>
+          )}
         </div>
 
         {/* Top-Left Category Badge */}

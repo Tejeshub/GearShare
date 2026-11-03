@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Suspense, useMemo, useState, useEffect } from 'react'
 import {
   calculatorProducts,
@@ -43,6 +44,7 @@ import {
   ChevronDown,
   Clock,
 } from 'lucide-react'
+import { SiteNav } from '@/components/SiteNav'
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -550,9 +552,11 @@ function RentalEnquiryContent() {
 
               <div className="mt-5 flex flex-col gap-5 sm:flex-row">
                 <div className="relative aspect-video w-full sm:w-44 shrink-0 overflow-hidden border border-white/[0.08] bg-[#060708]">
-                  <img
+                  <Image
                     src={selectedKit.image}
                     alt={selectedKit.title}
+                    fill
+                    sizes="(max-width: 639px) 100vw, 176px"
                     className="size-full object-cover grayscale contrast-110"
                   />
                   <span className="absolute left-2.5 top-2.5 border border-white/20 bg-black/60 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">
@@ -617,7 +621,7 @@ function RentalEnquiryContent() {
                       className="flex items-center justify-between border border-white/10 bg-[#0c0d0e] p-2.5 text-left transition hover:border-white/40 hover:bg-[#1a1c20]"
                     >
                       <div className="flex items-center gap-2.5 truncate">
-                        <img src={prod.image} alt={prod.name} className="size-8 object-cover grayscale shrink-0" />
+                        <Image src={prod.image} alt={prod.name} width={32} height={32} sizes="32px" className="size-8 object-cover grayscale shrink-0" />
                         <div className="truncate">
                           <p className="text-xs font-medium text-white truncate">{prod.name}</p>
                           <p className="text-[10px] text-[#717478]">{prod.category} · {formatINR(prod.price)}/d</p>
@@ -663,9 +667,11 @@ function RentalEnquiryContent() {
                     >
                       <div className="flex items-center gap-4">
                         <div className="relative aspect-square size-16 shrink-0 overflow-hidden border border-white/[0.08] bg-[#050607]">
-                          <img
+                          <Image
                             src={product.image}
                             alt={product.name}
+                            fill
+                            sizes="64px"
                             className="size-full object-cover grayscale contrast-110"
                           />
                         </div>
@@ -975,7 +981,8 @@ function RentalEnquiryContent() {
 
 export default function RentalEnquiryPage() {
   return (
-    <main className="min-h-screen bg-[#050607] px-6 py-16 text-[#f4f4f2] sm:px-10 md:py-24 lg:px-14 xl:px-16">
+    <main className="min-h-screen bg-[#050607] px-6 pb-16 pt-28 text-[#f4f4f2] sm:px-10 md:px-10 md:pb-24 md:pt-36 lg:px-14 xl:px-16">
+      <SiteNav />
       <Suspense
         fallback={
           <div className="py-24 text-center font-mono text-xs uppercase tracking-widest text-[#717478]">

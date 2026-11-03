@@ -11,7 +11,6 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
-  Menu,
   ShieldCheck,
   X,
   Sparkles,
@@ -20,9 +19,11 @@ import {
 } from 'lucide-react'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { SmoothScrollProvider } from '@/components/SmoothScrollProvider'
 import { CinematicHero } from '@/components/CinematicHero'
+import { SiteNav } from '@/components/SiteNav'
 import {
   calculatorProducts,
   finalizedProducts,
@@ -52,7 +53,6 @@ import {
 
 // Preload the real 3D models
 if (typeof window !== 'undefined') {
-  useGLTF.preload('/camera-rig.glb')
   useGLTF.preload('/camera_lens.glb')
 }
 
@@ -234,85 +234,6 @@ function Preloader({ isLoaded, onAnimationComplete }: { isLoaded: boolean; onAni
   )
 }
 
-function Nav() {
-  const [open, setOpen] = useState(false)
-  return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/[0.07] bg-[#050607]/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-[76px] w-full max-w-[1780px] items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-16">
-        <a href="#top" className="flex items-center gap-3.5 text-xs font-semibold tracking-[0.22em] text-[#f4f4f2]">
-          <span className="grid size-7 place-items-center border border-white/40 text-[10px] font-medium tracking-tight">
-            G
-          </span>
-          GEARSHARE
-        </a>
-
-        <nav className="hidden items-center gap-10 text-[11px] font-medium uppercase tracking-[0.18em] text-[#9a9ea2] lg:flex">
-          <a href="#gear" className="transition-colors hover:text-white">
-            Explore Gear
-          </a>
-          <a href="#kits" className="transition-colors hover:text-white">
-            Creator Kits
-          </a>
-          <a href="#process" className="transition-colors hover:text-white">
-            How It Works
-          </a>
-          <a href="#why" className="transition-colors hover:text-white">
-            About Us
-          </a>
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <a
-            href="#calculator"
-            className="group hidden items-center gap-2 border border-white/20 bg-white/[0.03] px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-[#f4f4f2] transition-all duration-300 hover:border-white hover:bg-white hover:text-black sm:flex"
-          >
-            <span>Explore Equipment</span>
-            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </a>
-          <button
-            aria-label="Toggle navigation menu"
-            onClick={() => setOpen(!open)}
-            className="grid size-10 place-items-center border border-white/15 text-white transition-colors hover:border-white/40 lg:hidden"
-          >
-            {open ? <X className="size-4" /> : <Menu className="size-4" />}
-          </button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="flex flex-col gap-5 border-t border-white/10 bg-[#080909] px-6 py-8 text-xs uppercase tracking-[0.18em] lg:hidden"
-          >
-            <a href="#gear" onClick={() => setOpen(false)} className="text-[#a1a1a1] hover:text-white">
-              Explore Gear
-            </a>
-            <a href="#kits" onClick={() => setOpen(false)} className="text-[#a1a1a1] hover:text-white">
-              Creator Kits
-            </a>
-            <a href="#process" onClick={() => setOpen(false)} className="text-[#a1a1a1] hover:text-white">
-              How It Works
-            </a>
-            <a href="#why" onClick={() => setOpen(false)} className="text-[#a1a1a1] hover:text-white">
-              About Us
-            </a>
-            <a
-              href="#calculator"
-              onClick={() => setOpen(false)}
-              className="mt-4 inline-block border border-white/30 py-3 text-center text-white"
-            >
-              Explore Equipment →
-            </a>
-          </motion.nav>
-        )}
-      </AnimatePresence>
-    </header>
-  )
-}
-
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <p className="mb-5 text-[10px] uppercase tracking-[0.26em] text-[#82868a]">
@@ -460,10 +381,11 @@ function Categories({ onCategory }: { onCategory: (c: string) => void }) {
                 } hover:border-white/30 hover:shadow-2xl hover:shadow-black/60`}
               >
                 {/* Background image with fallback */}
-                <img
+                <Image
                   src={cat.image}
                   alt={cat.name}
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw"
                   onError={(e) => {
                     const target = e.currentTarget
                     target.onerror = null
@@ -595,10 +517,11 @@ function Gear({ selected, setSelected }: { selected: string; setSelected: (v: st
             >
               {/* Product Photograph Container */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#060708]">
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
                   className="size-full object-cover object-center grayscale contrast-110 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                 />
                 {/* Availability Badge */}
@@ -687,9 +610,11 @@ function Gear({ selected, setSelected }: { selected: string; setSelected: (v: st
             <div className="grid gap-8 md:grid-cols-2">
               {/* Left Column: High-Res Image */}
               <div className="relative aspect-square w-full overflow-hidden border border-white/10 bg-[#060708]">
-                <img
+                <Image
                   src={active.image}
                   alt={active.name}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   className="size-full object-cover grayscale contrast-110"
                 />
                 <div className="absolute left-3 top-3 flex items-center gap-1.5 border border-white/20 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.14em] text-white/90 backdrop-blur-md">
@@ -828,10 +753,11 @@ function Kits() {
               }`}
             >
               {/* Kit Photograph with subtle dark treatment */}
-              <img
+              <Image
                 src={kit.image}
                 alt={kit.title}
-                loading="lazy"
+                fill
+                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 45vw"
                 className="absolute inset-0 size-full object-cover object-center grayscale contrast-110 transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
 
@@ -901,9 +827,11 @@ function Kits() {
 
             {/* Header Image */}
             <div className="relative aspect-[16/9] w-full overflow-hidden border border-white/10 bg-[#060708]">
-              <img
+              <Image
                 src={active.image}
                 alt={active.title}
+                fill
+                sizes="(max-width: 767px) 100vw, 672px"
                 className="size-full object-cover grayscale contrast-110"
               />
               <div className="absolute left-3 top-3 border border-white/20 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-[0.16em] text-white/90 backdrop-blur-md">
@@ -1148,14 +1076,20 @@ function Why() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
           {/* Left Column: Heading & Benefits List */}
           <div>
-            <SectionLabel>06 / WHY GEARSHARE</SectionLabel>
+            <SectionLabel>06 / ABOUT GEARSHARE</SectionLabel>
             <h2 className="font-heading text-4xl font-medium tracking-[-0.04em] text-[#f4f4f2] sm:text-5xl md:text-6xl">
-              Great Gear.
+              About
               <br />
-              <span className="text-[#787c80]">Zero Compromise.</span>
+              <span className="text-[#787c80]">GearShare.</span>
             </h2>
-            <p className="mt-6 max-w-xl text-sm leading-relaxed text-[#8c9094] sm:text-base">
-              Your creativity deserves professional tools. We make accessing the right equipment simple, reliable and transparent.
+            <p className="mt-6 max-w-xl text-sm leading-6 text-[#8c9094] sm:text-base">
+              GearShare is built for creators, photographers, and filmmakers who believe great stories deserve great equipment.
+            </p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-[#8c9094] sm:text-base">
+              We make professional photography and filmmaking gear accessible through flexible rental options, carefully curated equipment, and creator-focused kits.
+            </p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-[#8c9094] sm:text-base">
+              Whether you're working on a personal project, a commercial shoot, or your next big creative idea, GearShare helps you get the right gear without the commitment of ownership.
             </p>
 
             <div className="mt-10 divide-y divide-white/[0.08] border-y border-white/[0.08]">
@@ -1182,10 +1116,11 @@ function Why() {
 
           {/* Right Column: Premium Equipment Photograph */}
           <div className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] xl:aspect-[1/1] w-full overflow-hidden border border-white/[0.08] bg-[#050607]">
-            <img
+            <Image
               src="/images/why-gearshare/studio-rig.jpg"
               alt="Professional cinema camera rig with anamorphic lens and studio monitoring setup"
-              loading="lazy"
+              fill
+              sizes="(max-width: 1023px) 100vw, 50vw"
               className="size-full object-cover object-center grayscale contrast-115 transition-transform duration-700 ease-out hover:scale-105"
             />
             {/* Subtle monochrome vignette and depth gradients */}
@@ -1599,10 +1534,11 @@ function Calculator() {
                       <div className="flex gap-4">
                         {/* Thumbnail */}
                         <div className="relative aspect-square w-20 shrink-0 overflow-hidden border border-white/[0.08] bg-[#050607]">
-                          <img
+                          <Image
                             src={product.image}
                             alt={product.name}
-                            loading="lazy"
+                            fill
+                            sizes="80px"
                             className="size-full object-cover grayscale contrast-110 transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>
@@ -2137,7 +2073,7 @@ export default function Page() {
           <Preloader isLoaded={is3DReady} onAnimationComplete={() => setPreloaderFinished(true)} />
         )}
 
-        <Nav />
+        <SiteNav />
         <CinematicHero onReady={() => setIs3DReady(true)} />
         <Categories onCategory={onCategory} />
         <Gear selected={selected} setSelected={setSelected} />
