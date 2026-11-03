@@ -1,6 +1,6 @@
 from functools import lru_cache
 from typing import List, Optional, Union
-from pydantic import Field, SecretStr, field_validator
+from pydantic import SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,15 +27,6 @@ class Settings(BaseSettings):
 
     # Admin API Authentication
     ADMIN_API_KEY: Optional[SecretStr] = None
-
-    # Email Service Configuration (Gmail SMTP & Standard SMTP)
-    EMAIL_PROVIDER: str = "gmail"
-    EMAIL_ENABLED: bool = False
-    SMTP_HOST: str = "smtp.gmail.com"
-    SMTP_PORT: int = 587
-    SMTP_USERNAME: Optional[str] = None
-    SMTP_PASSWORD: Optional[SecretStr] = None
-    EMAIL_FROM: str = "GearShare Rentals <noreply@gearshare.com>"
 
     @field_validator("ALLOWED_ORIGINS", mode="before")
     @classmethod

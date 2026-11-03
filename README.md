@@ -46,7 +46,7 @@ The GearShare application is deployed and accessible online:
 - [9. Database Documentation & Migrations](#9-database-documentation--migrations)
 - [10. API Specification & Admin Authentication](#10-api-specification--admin-authentication)
 - [11. Rental Business Logic & Quoting Engine](#11-rental-business-logic--quoting-engine)
-- [12. Email Notification System (Gmail SMTP)](#12-email-notification-system-gmail-smtp)
+- [12. Rental Enquiry Confirmation](#12-rental-enquiry-confirmation)
 - [13. Testing & Verification](#13-testing--verification)
 - [14. Production Deployment Guide](#14-production-deployment-guide)
 - [15. Security & Production Hardening](#15-security--production-hardening)
@@ -65,7 +65,7 @@ The GearShare application is deployed and accessible online:
 - **Curated Creator Kits:** Complete production packages (such as the *Content Creator Kit* or *Filmmaker Kit*) bundled with multi-component packages.
 - **Accurate, Authoritative Quotes:** Real-time pricing calculations featuring inclusive calendar duration and automated multi-day discount curves.
 - **Date-Wise Physical Inventory Management:** Real physical units (tracked via individual serial numbers and asset codes) are checked against date ranges with exclusion constraints to prevent overlapping reservations.
-- **Enquiry-Driven Reservation Workflow:** Customers submit verified rental enquiries. Upon submission, equipment is placed under an **atomic 24-hour temporary inventory hold** pending administrative review and dispatch scheduling, with transactional confirmation emails delivered via Gmail SMTP.
+- **Enquiry-Driven Reservation Workflow:** Customers submit verified rental enquiries. Upon submission, equipment is placed under an **atomic 24-hour temporary inventory hold** pending administrative review and dispatch scheduling.
 
 > **Note on Workflow:** GearShare is designed around an **enquiry and review model**. It does not perform instant automated credit card charging; enquiries place a temporary 24-hour hold on physical stock while the production team reviews shoot details, security deposits, and identity verification.
 
@@ -80,7 +80,7 @@ The GearShare application is deployed and accessible online:
 - **Interactive Rental Calculator:** Configurable equipment selections, quantity selectors, live date pickers, and dynamic pricing previews.
 - **Creator Kit Configurator:** Select bundled kits with real-time component availability inspection and add-on equipment options.
 - **Live Form Validation:** Indian mobile phone sanitization and strict validation (`^[6-9]\d{9}$`) with static `+91` prefixing.
-- **Enquiry Confirmation Screen:** Dynamic feedback showing the generated enquiry reference (`GS-YYYY-XXXX`), hold countdown, and delivery status of the customer's confirmation email.
+- **Enquiry Confirmation Screen:** Dynamic feedback showing the generated enquiry reference (`GS-YYYY-XXXX`), requested dates, quote, and hold countdown.
 - **Contact Message Portal:** Built-in form submitting general queries to the backend.
 
 ### Backend (FastAPI / SQLAlchemy 2.0 / PostgreSQL)
@@ -89,8 +89,7 @@ The GearShare application is deployed and accessible online:
 - **Physical Inventory Tracking:** Separate `EquipmentUnit` assets tracking real-world serial numbers, asset tags, operational statuses, and maintenance conditions.
 - **Non-Overlapping Allocations:** PostgreSQL `tsrange` date-range reservation tracking ensuring no physical unit can be double-booked.
 - **Atomic 24-Hour Temporary Hold:** Background expiry mechanisms releasing physical units if enquiries are unconfirmed or cancelled.
-- **Idempotency Protection:** SHA-256 request payload hashing and `Idempotency-Key` headers preventing duplicate orders and double emails on network retries.
-- **Transactional Gmail SMTP Delivery:** Automatic dispatch of branded HTML/plain-text confirmation emails directly to the customer's entered address.
+- **Idempotency Protection:** SHA-256 request payload hashing and `Idempotency-Key` headers preventing duplicate enquiries on network retries.
 - **Admin API Authentication:** Constant-time API key verification (`verify_admin_key`) protecting internal management routes.
 
 ---
@@ -114,7 +113,7 @@ The GearShare application is deployed and accessible online:
 - **Database Migrations:** [Alembic 1.13.3+](https://alembic.sqlalchemy.org/)
 - **Database Driver:** [Psycopg 3.2+ (binary)](https://www.psycopg.org/psycopg3/)
 - **Testing:** [Pytest 8.3+](https://docs.pytest.org/), [HTTPX 0.27+](https://www.python-httpx.org/)
-- **Email Delivery:** Standard Python `smtplib` + `email.mime` (Gmail SMTP over STARTTLS)
+- **Customer Contact Data:** Validated customer email addresses are stored with rental enquiries for authorized administrative review.
 
 ### Infrastructure & Deployment
 - **Frontend Hosting:** [Vercel](https://vercel.com/)
@@ -139,12 +138,9 @@ graph TD
         BE --> QuoteSvc[Rental Quote Engine\nInclusive Days & Discounts]
         BE --> AvailSvc[Availability Service\nPhysical Unit Allocation]
         BE --> EnquirySvc[Enquiry Service\n24h Hold & Idempotency]
-        BE --> EmailSvc[Email Service\nGmail SMTP STARTTLS]
     end
     
     EnquirySvc -->|Persists Data & Allocations| DB[(Supabase PostgreSQL\nPhysical Units, Allocations, Enquiries)]
-    EmailSvc -->|Dispatches Confirmation| SMTP[Gmail SMTP Server\nsmtp.gmail.com:587]
-    SMTP -->|Delivers Email| Inbox([Customer Inbox / Spam])
 ```
 
 ---
@@ -215,7 +211,6 @@ GearShare/
 │   │   ├── services/                   # Business logic layers
 │   │   │   ├── availability_service.py # Date range intersection & stock check
 │   │   │   ├── catalog_service.py      # Equipment & category queries
-│   │   │   ├── email_service.py        # Gmail SMTP transactional mailer
 │   │   │   ├── enquiry_service.py      # Atomic enquiry creation & allocation
 │   │   │   └── rental_quote_service.py # Authoritative pricing & discount engine
 │   │   └── main.py                     # FastAPI application factory & middleware
@@ -273,24 +268,13 @@ Backend executes atomic PostgreSQL transaction:
 7. Commits transaction to database
     │
     ▼
-[6. TRANSACTIONAL CONFIRMATION DISPATCH]
-Post-commit, Backend dispatches email via Gmail SMTP (STARTTLS):
-• Recipient: customer's submitted email address
-• Sender: GearShare Rentals via configured Gmail address
-• If SMTP succeeds: confirmation_email_sent = True
-• If SMTP fails: error logged in DB, enquiry is NEVER rolled back
-    │
-    ▼
-[7. CONFIRMATION FEEDBACK]
+[6. CONFIRMATION FEEDBACK]
 Frontend renders "Rental Enquiry Received" screen:
 • Displays unique reference (GS-YYYY-XXXX)
 • Shows active 24-hour hold expiration timestamp
-• Shows dynamic notification:
-  - If sent: "Your confirmation email has been sent to [customer email]..."
-  - If unavailable: "Your rental enquiry has been received successfully..."
     │
     ▼
-[8. ADMIN LIFECYCLE MANAGEMENT]
+[7. ADMIN LIFECYCLE MANAGEMENT]
 Team reviews shoot details, deposit, and ID verification:
 • Admin accesses GET /api/v1/rentals/enquiries using X-Admin-Key
 • Admin updates status via PATCH /api/v1/rentals/enquiries/{ref}/status:
@@ -349,7 +333,7 @@ cd GearShare
    ```bash
    cp .env.example .env
    ```
-   Edit `Backend/.env` with your Supabase database credentials, admin key, and Gmail App Password:
+   Edit `Backend/.env` with your Supabase database credentials and admin key:
    ```ini
    APP_NAME="GearShare API"
    APP_ENV="development"
@@ -363,14 +347,6 @@ cd GearShare
    ADMIN_API_KEY="create-an-admin-secret-key"
    ALLOWED_ORIGINS="http://localhost:3000,http://127.0.0.1:3000"
 
-   # Email Configuration (Gmail SMTP)
-   EMAIL_PROVIDER=gmail
-   EMAIL_ENABLED=true
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_USERNAME=your_gmail@gmail.com
-   SMTP_PASSWORD="your-16-character-google-app-password"
-   EMAIL_FROM="GearShare Rentals <your_gmail@gmail.com>"
    ```
 
 5. **Apply Database Migrations:**
@@ -432,7 +408,7 @@ cd GearShare
 | :--- | :---: | :--- | :--- |
 | `NEXT_PUBLIC_API_BASE_URL` | **Yes** | `http://localhost:8000` | Backend API root URL consumed by centralized `apiClient`. In production, set to your Render backend URL. |
 
-> **Security Note:** Never add database passwords, SMTP credentials, or secret keys to `Frontend/.env.local`. Variables with `NEXT_PUBLIC_` are bundled directly into client-side JavaScript.
+> **Security Note:** Never add database passwords or secret keys to `Frontend/.env.local`. Variables with `NEXT_PUBLIC_` are bundled directly into client-side JavaScript.
 
 ---
 
@@ -446,13 +422,6 @@ cd GearShare
 | `SECRET_KEY` | **Yes** | *(64-char hex)* | Cryptographic salt used for security operations and token hashing. |
 | `ADMIN_API_KEY` | **Yes** | *(random secret)* | Secret token required to access administrative API endpoints via `X-Admin-Key`. |
 | `ALLOWED_ORIGINS` | **Yes** | `http://localhost:3000` | Comma-delimited list of authorized CORS origins. |
-| `EMAIL_PROVIDER` | No | `gmail` | Active transactional email service provider. |
-| `EMAIL_ENABLED` | No | `true` | Boolean switch to enable/disable SMTP email dispatch. |
-| `SMTP_HOST` | **Yes\*** | `smtp.gmail.com` | SMTP relay server host (*required if `EMAIL_ENABLED=true`). |
-| `SMTP_PORT` | **Yes\*** | `587` | SMTP port (`587` for STARTTLS). |
-| `SMTP_USERNAME` | **Yes\*** | `your_gmail@gmail.com` | Authenticated Gmail account username. |
-| `SMTP_PASSWORD` | **Yes\*** | `abcd efgh ijkl mnop` | Google App Password (16 characters, 2FA enabled). |
-| `EMAIL_FROM` | **Yes\*** | `GearShare <your_gmail@gmail.com>` | Sender identity shown in the customer's email client. |
 
 ---
 
@@ -555,23 +524,9 @@ When a customer selects a Creator Kit:
 
 ---
 
-## 12. Email Notification System (Gmail SMTP)
+## 12. Rental Enquiry Confirmation
 
-GearShare utilizes **Gmail SMTP with STARTTLS** to send automated confirmation emails directly to whichever email address the customer submits in the rental form.
-
-### Email Highlights
-- **Dynamic Recipient:** Delivered directly to `RentalEnquiry.email` (e.g. `customer@gmail.com`).
-- **Sender Identity:** Uses configured `EMAIL_FROM` with the authenticated Gmail username.
-- **Cinematic HTML & Text Multi-Part:** Branded dark theme featuring customer name, enquiry reference code, shoot dates, calendar duration, 24-hour hold expiration notice, itemized equipment breakdown table, and estimated total quote.
-- **Non-Blocking Post-Commit Dispatch:** If SMTP authentication or network transport fails, the enquiry is **never rolled back**. The error reason is saved in `rental_enquiries.confirmation_email_error`, and the customer is advised to save their reference ID.
-- **Idempotency:** Re-submitting an enquiry with the same `Idempotency-Key` returns the cached record immediately without duplicating emails.
-
-### Generating a Google App Password
-1. Sign in to your Google Account.
-2. Go to **Security** $\rightarrow$ **2-Step Verification** (must be enabled).
-3. Scroll to **App Passwords**.
-4. Generate a new App Password named `GearShare Backend`.
-5. Copy the 16-character password into `Backend/.env` as `SMTP_PASSWORD="xxxx xxxx xxxx xxxx"`.
+Rental enquiries collect and validate the customer's email address for the enquiry record and authorized administrative review. Submitting an enquiry atomically creates the enquiry, snapshots the selected equipment, allocates available inventory, and places it under a 24-hour hold. The confirmation screen displays the enquiry reference, requested dates, quote, pending-review status, and hold expiry.
 
 ---
 
@@ -639,13 +594,6 @@ npm run build
    - `SECRET_KEY`: *(Generate a 64-character secret string)*
    - `ADMIN_API_KEY`: *(Create a secure random secret for administrative requests)*
    - `ALLOWED_ORIGINS`: `https://[YOUR-VERCEL-APP].vercel.app,http://localhost:3000`
-   - `EMAIL_PROVIDER`: `gmail`
-   - `EMAIL_ENABLED`: `true`
-   - `SMTP_HOST`: `smtp.gmail.com`
-   - `SMTP_PORT`: `587`
-   - `SMTP_USERNAME`: `your_gmail@gmail.com`
-   - `SMTP_PASSWORD`: `your-google-app-password`
-   - `EMAIL_FROM`: `GearShare Rentals <your_gmail@gmail.com>`
 
 ---
 
@@ -668,18 +616,17 @@ npm run build
 2. Go back to Render $\rightarrow$ `gearshare-api` $\rightarrow$ **Environment**.
 3. Update `ALLOWED_ORIGINS` to include your production Vercel domain.
 4. Open the Vercel site, navigate to `/rental-enquiry`, and submit a live test enquiry.
-5. Confirm the enquiry is recorded in Supabase, physical stock is reserved, and confirmation email arrives in the customer's inbox.
+5. Confirm the enquiry is recorded in Supabase, physical stock is reserved, and the confirmation screen displays the generated reference and hold details.
 
 ---
 
 ## 15. Security & Production Hardening
 
-- **No Secrets in Frontend:** The frontend only contains the public `NEXT_PUBLIC_API_BASE_URL`. Database credentials, Google App Passwords, and administrative keys are stored strictly in backend server environment variables.
+- **No Secrets in Frontend:** The frontend only contains the public `NEXT_PUBLIC_API_BASE_URL`. Database credentials and administrative keys are stored strictly in backend server environment variables.
 - **Git Hygiene:** Monorepo `.gitignore` ensures `.env`, `.env.local`, and build artifacts are never tracked in Git.
 - **Constant-Time Comparison:** Admin authentication uses Python's `secrets.compare_digest` to mitigate side-channel timing attacks.
 - **Input Sanitization:** Indian phone numbers are pre-sanitized and validated with regex `^[6-9]\d{9}$`. String types are preserved to prevent integer truncation.
 - **Internal Asset Masking:** Public enquiry lookups hide internal serial numbers, unit IDs, and maintenance logs.
-- **Gmail SMTP Volume Limitations:** Gmail SMTP is ideal for demonstration and low-volume assignment verification (up to 500 emails/day under Google policy). For high-volume production, GearShare's modular `EmailService` can be pointed to Amazon SES, SendGrid, or Postmark by updating SMTP host settings.
 
 ---
 
@@ -706,7 +653,7 @@ npm run build
 - Date-wise physical stock checking with non-overlapping constraints.
 - Multi-day quote calculation and Creator Kit bundled discount logic.
 - Atomic 24-hour temporary inventory holds.
-- Transactional Gmail SMTP confirmation email notifications.
+- Customer email collection and validation for rental enquiry records.
 - Admin API key authentication on enquiry management endpoints.
 - Mobile-responsive dark cinematic design with 3D lens interaction.
 

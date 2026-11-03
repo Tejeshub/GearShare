@@ -8,7 +8,6 @@ if TYPE_CHECKING:
     from app.models.inventory import RentalAllocation
 
 from sqlalchemy import (
-    Boolean,
     Date,
     DateTime,
     Enum,
@@ -76,17 +75,6 @@ class RentalEnquiry(Base):
         DateTime(timezone=True),
         index=True,
         nullable=False,
-    )
-
-    # Email notification tracking
-    confirmation_email_sent: Mapped[bool] = mapped_column(
-        Boolean, default=False, nullable=False
-    )
-    confirmation_email_error: Mapped[Optional[str]] = mapped_column(
-        Text, nullable=True
-    )
-    confirmation_email_sent_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
     )
 
     created_at: Mapped[datetime] = mapped_column(

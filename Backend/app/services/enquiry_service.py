@@ -29,7 +29,6 @@ from app.schemas.enquiry import (
 )
 from app.schemas.rentals import RentalQuoteRequest
 from app.services.availability_service import AvailabilityService
-from app.services.email_service import EmailService
 from app.services.rental_quote_service import RentalQuoteService
 
 logger = logging.getLogger(__name__)
@@ -250,51 +249,6 @@ class EnquiryService:
                 db.add(idemp_rec)
 
             db.commit()
-
-            # 9. Transaction committed successfully -> Dispatch Confirmation Email via SMTP
-            # Recipient is strictly derived from the persisted customer email in the enquiry record
-            email_sent = False
-            email_err = None
-            try:
-                email_sent, email_err = EmailService.send_enquiry_confirmation_email(
-                    recipient_email=enquiry.email,
-                    customer_name=enquiry.customer_name,
-                    reference_id=reference,
-                    start_date=str(enquiry.start_date),
-                    end_date=str(enquiry.end_date),
-                    duration_days=quote.duration_days,
-                    formatted_total=quote.formatted_total,
-                    hold_expires_at_iso=hold_expires_at.isoformat(),
-                    quote_lines=[line.model_dump(mode="json") for line in quote.lines],
-                )
-                # Persist email status in enquiry record
-                enquiry.confirmation_email_sent = email_sent
-                if email_sent:
-                    enquiry.confirmation_email_sent_at = datetime.now(timezone.utc)
-                    enquiry.confirmation_email_error = None
-                else:
-                    enquiry.confirmation_email_error = email_err or "Email dispatch failed or rejected by SMTP server"
-                db.commit()
-            except Exception as mail_err:
-                logger.error("Error during email dispatch post-commit for %s: %s", reference, str(mail_err))
-                try:
-                    enquiry.confirmation_email_sent = False
-                    enquiry.confirmation_email_error = str(mail_err)
-                    db.commit()
-                except Exception:
-                    db.rollback()
-
-            result.confirmation_email_sent = email_sent
-
-            # Update idempotency record if present so replay has accurate email flag
-            if idempotency_key and request_hash:
-                try:
-                    idemp_record = db.scalar(select(IdempotencyRecord).where(IdempotencyRecord.key == idempotency_key))
-                    if idemp_record:
-                        idemp_record.response_data = result.model_dump(mode="json")
-                        db.commit()
-                except Exception:
-                    pass
 
             return result
 

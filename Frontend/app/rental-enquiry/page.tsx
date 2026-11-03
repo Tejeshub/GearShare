@@ -408,19 +408,6 @@ function RentalEnquiryContent() {
               Thank you, <strong className="text-white">{customerName}</strong>. Our equipment team will review your requested shoot timeline ({startDate} → {endDate}) and confirm equipment reservation availability shortly.
             </p>
 
-            {/* Confirmation email notification message */}
-            <div className="mt-4 pt-3 border-t border-white/10 text-xs leading-relaxed">
-              {submissionResult.confirmationEmailSent ? (
-                <p className="text-[#a1a5a9]">
-                  Your confirmation email has been sent to <span className="text-white font-medium">{email}</span>. Please check your inbox and spam folder for your GearShare rental enquiry confirmation.
-                </p>
-              ) : (
-                <p className="text-amber-300/90">
-                  Your rental enquiry was received successfully, but we couldn&apos;t send the confirmation email. Please save your enquiry reference.
-                </p>
-              )}
-            </div>
-
             {holdDateFormatted && isHoldActive && (
               <p className="mt-3 inline-flex items-center gap-2 border border-emerald-500/20 bg-emerald-950/20 px-3 py-1.5 text-xs text-emerald-300">
                 <Clock className="size-3.5" />
@@ -441,6 +428,10 @@ function RentalEnquiryContent() {
             <div className="flex justify-between py-2 text-[#8c9094]">
               <span>Rental Duration</span>
               <span className="text-white font-mono">{rentalDays} days</span>
+            </div>
+            <div className="flex justify-between py-2 text-[#8c9094]">
+              <span>Requested Dates</span>
+              <span className="text-white font-mono">{startDate} → {endDate}</span>
             </div>
             <div className="flex justify-between py-2 text-[#8c9094]">
               <span>Estimated Quote</span>
